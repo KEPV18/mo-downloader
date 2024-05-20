@@ -4,49 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Downloader</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Video Downloader</h1>
-    <label for="videoUrl">Video URL:</label>
-    <input type="text" id="videoUrl" placeholder="Enter video URL">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Video Downloader</h1>
+        <form id="downloadForm">
+            <div class="form-group">
+                <label for="videoUrl">Video URL:</label>
+                <input type="text" class="form-control" id="videoUrl" name="videoUrl" placeholder="Enter video URL">
+            </div>
+            <div class="form-group">
+                <label for="platform">Platform:</label>
+                <select class="form-control" id="platform" name="platform">
+                    <option value="youtube">YouTube</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="instagram">Instagram</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary" id="downloadButton">Download</button>
+        </form>
+    </div>
 
-    <label for="platform">Platform:</label>
-    <select id="platform">
-      <option value="youtube">YouTube</option>
-      <option value="instagram">Instagram</option>
-      <option value="facebook">Facebook</option>
-    </select>
-
-    <label for="quality">Quality:</label>
-    <select id="quality">
-      <option value="hd720">HD 720p</option>
-      <option value="medium">Medium Quality</option>
-      <option value="small">Small Quality</option>
-    </select>
-    
-    <label for="audioOnly">Audio Only:</label>
-    <input type="checkbox" id="audioOnly">
-    
-    <button onclick="downloadVideo()">Download</button>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-      function downloadVideo() {
-        const videoUrl = document.getElementById("videoUrl").value;
-        const platform = document.getElementById("platform").value;
-        const quality = document.getElementById("quality").value;
-        const audioOnly = document.getElementById("audioOnly").checked;
-        let url = "";
-        
-        if (platform === "youtube") {
-          url = `https://www.yt-download.org/api/button/${quality}/${audioOnly ? 'mp3/' : ''}${videoUrl}`;
-        } else if (platform === "instagram") {
-          url = `https://www.instadownload.site/api/?url=${videoUrl}`;
-        } else if (platform === "facebook") {
-          url = `https://www.fbdown.net/download.php?id=${videoUrl}`;
-        }
-        
-        window.location.href = url;
-      }
+        $(document).ready(function() {
+            $('#downloadButton').click(function() {
+                var videoUrl = $('#videoUrl').val();
+                var platform = $('#platform').val();
+
+                // Send AJAX request to download.php
+                $.ajax({
+                    type: 'POST',
+                    url: 'download.php',
+                    data: { videoUrl: videoUrl, platform: platform },
+                    success: function(response) {
+                        // Redirect to the download link
+                        window.location.href = response;
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
