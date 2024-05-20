@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader</title>
+</head>
+<body>
+    <h1>Video Downloader</h1>
+    <label for="videoUrl">Video URL:</label>
+    <input type="text" id="videoUrl" placeholder="Enter video URL">
+
+    <label for="platform">Platform:</label>
+    <select id="platform">
+      <option value="youtube">YouTube</option>
+      <option value="instagram">Instagram</option>
+    </select>
+
+    <label for="quality">Quality:</label>
+    <select id="quality">
+      <option value="hd720">HD 720p</option>
+      <option value="medium">Medium Quality</option>
+      <option value="small">Small Quality</option>
+    </select>
+    
+    <label for="audioOnly">Audio Only:</label>
+    <input type="checkbox" id="audioOnly">
+    
+    <button onclick="downloadVideo()">Download</button>
+
+    <script>
+      function downloadVideo() {
+        const videoUrl = document.getElementById("videoUrl").value;
+        const platform = document.getElementById("platform").value;
+        const quality = document.getElementById("quality").value;
+        const audioOnly = document.getElementById("audioOnly").checked;
+        let url = "";
+        
+        if (platform === "youtube") {
+          url = `https://www.yt-download.org/api/button/${quality}/${audioOnly? 'mp3/':''}${videoUrl}`;
+        } else if (platform === "instagram") {
+          url = `https://www.instadownload.site/api/?url=${videoUrl}`;
+        }
+        
+        window.open(url);
+      }
+    </script>
+</body>
+</html>
