@@ -14,6 +14,7 @@
     <select id="platform">
       <option value="youtube">YouTube</option>
       <option value="instagram">Instagram</option>
+      <option value="facebook">Facebook</option>
     </select>
 
     <label for="quality">Quality:</label>
@@ -40,6 +41,8 @@
           url = `https://www.yt-download.org/api/button/${quality}/${audioOnly? 'mp3/':''}${videoUrl}`;
         } else if (platform === "instagram") {
           url = `https://www.instadownload.site/api/?url=${videoUrl}`;
+        } else if (platform === "facebook") {
+          url = `https://www.fbdown.net/download.php?id=${videoUrl}`;
         }
         
         window.open(url);
